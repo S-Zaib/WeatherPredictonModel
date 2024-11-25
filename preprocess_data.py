@@ -1,25 +1,30 @@
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler, LabelEncoder
-import os
+from sklearn.preprocessing import StandardScaler
+from sklearn.impute import SimpleImputer
+import numpy as np
 
-def preprocess_weather_data(input_path, output_path):
-    """Preprocess the weather data."""
-    # Load the raw data
-    df = pd.read_csv(input_path)
+# Function to preprocess the weather data
+def preprocess_weather_data(file_path, output_path):
+    
+    # Load the data
+    data = pd.read_csv(file_path)
 
-    # Handle missing values
-    df['temperature'].fillna(df['temperature'].mean(), inplace=True)
-    df['humidity'].fillna(df['humidity'].mean(), inplace=True)
-    df['wind_speed'].fillna(df['wind_speed'].mean(), inplace=True)
-    df.dropna(subset=['date_time', 'weather_condition'], inplace=True)
+    # Convert date_time to pandas format
+    data['date_time'] = pd.to_datetime(data['date_time'])
 
-    # Normalize numerical columns
-    scaler = MinMaxScaler()
-    df[['temperature', 'humidity', 'wind_speed']] = scaler.fit_transform(
-        df[['temperature', 'humidity', 'wind_speed']]
+    # Extract useful features from
+    data['day_of_week'] = data['date_time'].dt.dayofweek  # Monday=0, Sunday=6
+    data['month'] = data['date_time'].dt.month
+    data['hour'] = data['date_time'].dt.hour
+    data['day'] = data['date_time'].dt.day
+
+    # missing values (if any)
+    imputer = SimpleImputer(strategy='mean')  # For numerical columns
+    data[['temperature', 'humidity', 'wind_speed']] = imputer.fit_transform(
+        data[['temperature', 'humidity', 'wind_speed']]
     )
-
-    # Map weather conditions to categories (grouping similar conditions)
+    
+    # Map weather conditions, categorical encoding
     weather_mapping = {
         "Clear": 0,
         "Clouds": 1,
@@ -38,26 +43,22 @@ def preprocess_weather_data(input_path, output_path):
         "Tornado": 5
     }
     
-    # Apply the mapping to encode weather conditions
-    df['weather_condition_encoded'] = df['weather_condition'].map(weather_mapping)
+    # Apply the mapping to the weather_condition column
+    data['weather_condition'] = data['weather_condition'].map(weather_mapping)
 
-    # Ensure all weather conditions are accounted for
-    if df['weather_condition_encoded'].isnull().any():
-        missing_conditions = df[df['weather_condition_encoded'].isnull()]['weather_condition'].unique()
-        print(f"Warning: Unmapped weather conditions found: {missing_conditions}")
-        df['weather_condition_encoded'].fillna(-1, inplace=True)  # Assign -1 for unmapped conditions
+    # Step 6: Normalize numerical columns (temperature, humidity, wind_speed)
+    scaler = StandardScaler()
+    data[['temperature', 'humidity', 'wind_speed']] = scaler.fit_transform(
+        data[['temperature', 'humidity', 'wind_speed']]
+    )
 
+    # Drop the original date_time
+    data = data.drop(columns=['date_time'])
 
-    # Save the processed data
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    df.to_csv(output_path, index=False)
-    print(f"Processed data saved to {output_path}")
+    # Save the preprocessed data
+    data.to_csv(output_path, index=False)
+    print(f"Preprocessed data saved to {output_path}")
 
-
+# Example usage
 if __name__ == "__main__":
-    # Paths
-    raw_data_path = "data/raw/raw.csv"  
-    processed_data_path = "data/processed/processed_data.csv"  
-
-    # Preprocess the data
-    preprocess_weather_data(raw_data_path, processed_data_path)
+    preprocess_weather_data('data/raw/raw.csv', 'data/processed/processed_data.csv')
