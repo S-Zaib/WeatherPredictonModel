@@ -1,0 +1,20 @@
+# DVC cache directory
+.dvc/cache/
+
+# Files generated during DVC commands
+.dvc/tmp/
+
+# Specific large files tracked by DVC
+
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Airflow logs and databases
+airflow.db
+logs/
+
+# Environment file
+.env

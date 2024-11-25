@@ -1,3 +1,14 @@
 # Add patterns of files dvc should ignore, which could improve
 # the performance. Learn more at
 # https://dvc.org/doc/user-guide/dvcignore
+# Temporary or system files
+*.tmp
+*.log
+*.bak
+
+# IDE or editor-specific files
+.vscode/
+.idea/
+
+# Other irrelevant data for DVC
+node_modules/
