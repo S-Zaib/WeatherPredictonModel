@@ -43,14 +43,10 @@ def preprocess_weather_data(file_path, output_path):
         "Tornado": 5
     }
     
+    # No need for scaling features since RandomForestRegressor doesnt need its features scaled :)
+
     # Apply the mapping to the weather_condition column
     data['weather_condition'] = data['weather_condition'].map(weather_mapping)
-
-    # Step 6: Normalize numerical columns (temperature, humidity, wind_speed)
-    scaler = StandardScaler()
-    data[['temperature', 'humidity', 'wind_speed']] = scaler.fit_transform(
-        data[['temperature', 'humidity', 'wind_speed']]
-    )
 
     # Drop the original date_time
     data = data.drop(columns=['date_time'])
@@ -59,6 +55,6 @@ def preprocess_weather_data(file_path, output_path):
     data.to_csv(output_path, index=False)
     print(f"Preprocessed data saved to {output_path}")
 
-# Example usage
+
 if __name__ == "__main__":
     preprocess_weather_data('data/raw/raw.csv', 'data/processed/processed_data.csv')

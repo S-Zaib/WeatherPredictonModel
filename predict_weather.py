@@ -1,0 +1,1 @@
+print('Load pkl and predict weather')

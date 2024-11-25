@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def collect_weather_data():
-    """Collect 5 days of historical weather data for Islamabad using One Call API 3.0"""
+    """Collect hourly weather data for every hour of the past 5 days for Islamabad"""
     API_KEY = os.getenv('OPENWEATHER_API_KEY')
     
     # Coordinates for Islamabad
@@ -17,33 +17,44 @@ def collect_weather_data():
     base_url = "https://api.openweathermap.org/data/3.0/onecall/timemachine"
     
     weather_data = []
-    current_time = int(datetime.now().timestamp())
     
-    # Collect 5 days of historical data backwards
-    for i in range(5):
-        params = {
-            'lat': LAT,
-            'lon': LON,
-            'dt': current_time - (i * 24 * 60 * 60),  # Go back one day at a time
-            'appid': API_KEY,
-            'units': 'metric'
-        }
+    # Calculate timestamps for the past 5 days
+    end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    
+    # Iterate through past 5 days
+    for day_offset in range(5):
+        current_day = end_date - timedelta(days=day_offset+1)
         
-        response = requests.get(base_url, params=params)
-        if response.status_code == 200:
-            data = response.json()
+        # Generate timestamps for every hour of the day
+        for hour in range(24):
+            specific_hour = current_day + timedelta(hours=hour)
+            timestamp = int(specific_hour.timestamp())
             
-            # Extract hourly data for the day
-            for hourly_data in data.get('data', []):
-                weather_data.append({
-                    'date_time': datetime.fromtimestamp(hourly_data['dt']).strftime('%Y-%m-%d %H:%M:%S'),
-                    'temperature': hourly_data['temp'],
-                    'humidity': hourly_data['humidity'],
-                    'wind_speed': hourly_data['wind_speed'],
-                    'weather_condition': hourly_data['weather'][0]['main']
-                })
-        else:
-            print("balls", response)
+            params = {
+                'lat': LAT,
+                'lon': LON,
+                'dt': timestamp,
+                'appid': API_KEY,
+                'units': 'metric'
+            }
+            
+            response = requests.get(base_url, params=params)
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Extract data for this specific timestamp
+                hourly_data = data.get('data', [{}])[0]
+                
+                if hourly_data:
+                    weather_data.append({
+                        'date_time': datetime.fromtimestamp(hourly_data['dt']).strftime('%Y-%m-%d %H:%M:%S'),
+                        'temperature': hourly_data['temp'],
+                        'humidity': hourly_data['humidity'],
+                        'wind_speed': hourly_data['wind_speed'],
+                        'weather_condition': hourly_data['weather'][0]['main']
+                    })
+            else:
+                print(f"Error fetching data for {specific_hour}: Status code {response.status_code}")
     
     # Create DataFrame
     df = pd.DataFrame(weather_data)
@@ -57,6 +68,5 @@ def collect_weather_data():
     
     return output_path
 
-# Main execution for standalone script
 if __name__ == '__main__':
     collect_weather_data()
