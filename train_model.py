@@ -35,7 +35,7 @@ def train_temperature_model(input_file):
         'r2_score': r2
     }
 
-    with open('metrics.json', 'w') as f:
+    with open('metrics/metrics.json', 'w') as f:
         json.dump(metrics, f)
 
     # Save

@@ -2,12 +2,12 @@ stages:
   collect_data:
     cmd: python collect_data.py
     outs:
-      - data/raw/raw_data.csv
+      - data/raw/raw.csv
 
   preprocess_data:
     cmd: python preprocess_data.py
     deps:
-      - data/raw/raw_data.csv
+      - data/raw/raw.csv
     outs:
       - data/processed/processed_data.csv
 
@@ -18,4 +18,4 @@ stages:
     outs:
       - model/temperature_model.pkl
     metrics:
-      - metrics.json
+      - metrics/metrics.json

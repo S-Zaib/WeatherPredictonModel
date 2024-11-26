@@ -1,0 +1,37 @@
+schema: '2.0'
+stages:
+  collect_data:
+    cmd: python collect_data.py
+    outs:
+    - path: data/raw/raw.csv
+      hash: md5
+      md5: 82d554c9fc1269977cbfe9d0162067d9
+      size: 4993
+  preprocess_data:
+    cmd: python preprocess_data.py
+    deps:
+    - path: data/raw/raw.csv
+      hash: md5
+      md5: 82d554c9fc1269977cbfe9d0162067d9
+      size: 4993
+    outs:
+    - path: data/processed/processed_data.csv
+      hash: md5
+      md5: 53579650f3932598164ff7a14e823f71
+      size: 3606
+  train_model:
+    cmd: python train_model.py
+    deps:
+    - path: data/processed/processed_data.csv
+      hash: md5
+      md5: 53579650f3932598164ff7a14e823f71
+      size: 3606
+    outs:
+    - path: metrics/metrics.json
+      hash: md5
+      md5: 405c53673a498f0cae6b8f0ca1a43e65
+      size: 119
+    - path: model/temperature_model.pkl
+      hash: md5
+      md5: df867153f7225c23e8a070af4ca28944
+      size: 824753

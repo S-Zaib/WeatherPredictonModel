@@ -1,5 +1,0 @@
-outs:
-- md5: 56c3491f42f28fdd3302a0504625c935
-  size: 764689
-  hash: md5
-  path: temperature_model.pkl
