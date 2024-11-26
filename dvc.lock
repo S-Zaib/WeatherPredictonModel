@@ -5,8 +5,8 @@ stages:
     outs:
     - path: data/raw/raw.csv
       hash: md5
-      md5: 82d554c9fc1269977cbfe9d0162067d9
-      size: 4993
+      md5: 81051bcc2cf1bedf378224b0a93e2877
+      size: 2
   preprocess_data:
     cmd: python preprocess_data.py
     deps:
