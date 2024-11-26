@@ -1,4 +1,0 @@
-processing_date: 2024-11-26 01:11:42
-input_rows: 5
-weather_mapping: {'Clear': 0, 'Clouds': 1, 'Rain': 2, 'Drizzle': 2, 'Thunderstorm': 3, 'Snow': 4, 'Mist': 5, 'Smoke': 5, 'Haze': 5, 'Dust': 5, 'Fog': 5, 'Sand': 5, 'Ash': 5, 'Squall': 5, 'Tornado': 5}
-scaling_info: {'min_values': {'temperature': 14.34, 'humidity': 32.0, 'wind_speed': 0.45}, 'max_values': {'temperature': 16.57, 'humidity': 74.0, 'wind_speed': 2.57}}
