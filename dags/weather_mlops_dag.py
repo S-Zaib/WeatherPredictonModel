@@ -12,7 +12,7 @@ def run_data_collection():
     """
     Execute data collection script
     """
-    result = subprocess.run([sys.executable, 'collect_data.py'], 
+    result = subprocess.run([sys.executable, '/mnt/c/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/collect_data.py'], 
                              capture_output=True, 
                              text=True, 
                              cwd=os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +24,7 @@ def run_data_preprocessing():
     """
     Execute data preprocessing script
     """
-    result = subprocess.run([sys.executable, 'preprocess_data.py'], 
+    result = subprocess.run([sys.executable, '/mnt/c/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/preprocess_data.py'], 
                              capture_output=True, 
                              text=True, 
                              cwd=os.path.dirname(os.path.abspath(__file__)))
@@ -36,7 +36,7 @@ def run_model_training():
     """
     Execute model training script
     """
-    result = subprocess.run([sys.executable, 'train_model.py'], 
+    result = subprocess.run([sys.executable, '/mnt/c/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/train_model.py'], 
                              capture_output=True, 
                              text=True, 
                              cwd=os.path.dirname(os.path.abspath(__file__)))
