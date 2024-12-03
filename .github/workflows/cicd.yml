@@ -38,7 +38,7 @@ jobs:
       run: |
         echo "$GOOGLE_APPLICATION_CREDENTIALS" > service-account.json
         export GOOGLE_APPLICATION_CREDENTIALS=$PWD/service-account.json
-        dvc remote add -d myremote gdrive://${{ secrets.GDRIVE_FOLDER_ID }}
+        dvc remote add -d myremote -f gdrive://${{ secrets.GDRIVE_FOLDER_ID }}
         dvc remote default myremote
         
     - name: Pull DVC tracked files
