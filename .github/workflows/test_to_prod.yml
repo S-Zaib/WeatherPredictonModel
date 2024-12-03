@@ -91,4 +91,4 @@ jobs:
     - name: Get Minikube IP and Service URL
       run: |
           minikube service list
-          minikube service nodejs-app --url
+          minikube service weather-prediction-service --url
