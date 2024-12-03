@@ -1,11 +1,11 @@
 name: CD Pipeline
 
 on:
-  pull_request:
-    branches:
-      - prod
-    types:
-      - closed
+  # pull_request:
+  #   branches:
+  #     - prod
+  #   types:
+  #     - closed
   push:
     branches:
       - feature-cicd
