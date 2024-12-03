@@ -81,6 +81,12 @@ jobs:
         kubectl get deployments
         kubectl get services
         kubectl get pods
+        
+    - name: Troubleshoot Deployment
+      run: |
+        kubectl describe deployment weather-prediction-app
+        kubectl describe pods
+        kubectl get events
 
     - name: Get Minikube IP and Service URL
       run: |
