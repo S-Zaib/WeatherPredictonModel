@@ -34,15 +34,17 @@ jobs:
 
     - name: Configure DVC Google Drive
       env:
-        GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS }}
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
       run: |
-        echo "$GDRIVE_CREDENTIALS_DATA" > gdrive_creds.json
+        echo "$GOOGLE_APPLICATION_CREDENTIALS" > service-account.json
+        export GOOGLE_APPLICATION_CREDENTIALS=$PWD/service-account.json
         dvc remote add -d myremote -f gdrive://${{ secrets.GDRIVE_FOLDER_ID }}
-        dvc remote modify myremote gdrive_client_id $(cat gdrive_creds.json | jq -r .client_id)
-        dvc remote modify myremote gdrive_client_secret $(cat gdrive_creds.json | jq -r .client_secret)
-
+        dvc remote default myremote
+        
     - name: Pull DVC tracked files
-      run: dvc pull
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS=$PWD/service-account.json
+        dvc pull
 
     - name: Install backend dependencies
       run: |
