@@ -27,6 +27,23 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    - name: Install DVC
+      run: |
+        pip install dvc dvc-gdrive
+        dvc version
+
+    - name: Configure DVC Google Drive
+      env:
+        GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS }}
+      run: |
+        echo "$GDRIVE_CREDENTIALS_DATA" > gdrive_creds.json
+        dvc remote add -d myremote gdrive://${{ secrets.GDRIVE_FOLDER_ID }}
+        dvc remote modify myremote gdrive_client_id $(cat gdrive_creds.json | jq -r .client_id)
+        dvc remote modify myremote gdrive_client_secret $(cat gdrive_creds.json | jq -r .client_secret)
+
+    - name: Pull DVC tracked files
+      run: dvc pull
+
     - name: Install backend dependencies
       run: |
         python -m pip install --upgrade pip
