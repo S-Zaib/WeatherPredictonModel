@@ -12,7 +12,7 @@ on:
 
 jobs:
   deploy-to-minikube:
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
