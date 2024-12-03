@@ -1,0 +1,88 @@
+name: CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - prod
+    types:
+      - closed
+  push:
+    branches:
+      - feature-cicd
+
+jobs:
+  deploy-to-minikube:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Minikube
+      uses: medyagh/setup-minikube@master
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Pull Docker image
+      run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
+
+    - name: Load Docker image to Minikube
+      run: |
+        minikube image load ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
+
+    - name: Create Kubernetes Deployment
+      run: |
+        cat << EOF > deployment.yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: weather-prediction-app
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: weather-prediction-app
+          template:
+            metadata:
+              labels:
+                app: weather-prediction-app
+            spec:
+              containers:
+              - name: weather-prediction-app
+                image: ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
+                ports:
+                - containerPort: 5000
+        ---
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: weather-prediction-service
+        spec:
+          type: NodePort
+          selector:
+            app: weather-prediction-app
+          ports:
+          - port: 5000
+            targetPort: 5000
+            nodePort: 30007
+        EOF
+
+    - name: Deploy to Minikube
+      run: |
+        kubectl apply -f deployment.yaml
+
+    - name: Check deployment status
+      run: |
+        kubectl get deployments
+        kubectl get services
+        kubectl get pods
+
+    - name: Get Minikube IP and Service URL
+      run: |
+        minikube ip
+        minikube service weather-prediction-service --url
