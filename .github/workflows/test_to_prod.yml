@@ -57,11 +57,13 @@ jobs:
                 image: ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
                 imagePullPolicy: Always  # Always try to pull the latest image
                 ports:
-                - containerPort: 5000
-                # Add readiness and liveness probes
+                - containerPort: 5000  # Backend port
+                  name: backend
+                - containerPort: 3000  # Frontend port
+                  name: frontend
                 readinessProbe:
                   httpGet:
-                    path: /health  # Ensure you have a health check endpoint
+                    path: /health
                     port: 5000
                   initialDelaySeconds: 10
                   periodSeconds: 5
@@ -81,9 +83,14 @@ jobs:
           selector:
             app: weather-prediction-app
           ports:
-          - port: 5000
+          - name: backend
+            port: 5000
             targetPort: 5000
             nodePort: 30007
+          - name: frontend
+            port: 3000
+            targetPort: 3000
+            nodePort: 30008
         EOF
 
     - name: Deploy to Minikube
