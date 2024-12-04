@@ -32,6 +32,75 @@ jobs:
       run: |
         minikube image load ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
 
+    - name: Create Kubernetes Deployment
+      run: |
+        cat << EOF > deployment.yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: weather-prediction-app
+          labels:
+            app: weather-prediction-app
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: weather-prediction-app
+          template:
+            metadata:
+              labels:
+                app: weather-prediction-app
+            spec:
+              containers:
+              - name: weather-prediction-app
+                image: ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
+                imagePullPolicy: Always
+                ports:
+                - containerPort: 5000
+                  name: backend
+                - containerPort: 3000
+                  name: frontend
+                resources:
+                  requests:
+                    cpu: 2
+                    memory: 7Gi
+                  limits:
+                    cpu: 2
+                    memory: 7Gi
+                readinessProbe:
+                  httpGet:
+                    path: /health
+                    port: 5000
+                  initialDelaySeconds: 200
+                  periodSeconds: 100
+                  failureThreshold: 3
+                livenessProbe:
+                  httpGet:
+                    path: /health
+                    port: 5000
+                  initialDelaySeconds: 300
+                  periodSeconds: 150
+                  failureThreshold: 3
+        ---
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: weather-prediction-service
+        spec:
+          type: NodePort
+          selector:
+            app: weather-prediction-app
+          ports:
+          - name: backend
+            port: 5000
+            targetPort: 5000
+            nodePort: 30007
+          - name: frontend
+            port: 3000
+            targetPort: 3000
+            nodePort: 30008
+        EOF
+
     - name: Deploy to Minikube
       run: |
         kubectl apply -f deployment.yaml
