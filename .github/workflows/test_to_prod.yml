@@ -1,18 +1,15 @@
 name: CD Pipeline
 
 on:
-  # pull_request:
-  #   branches:
-  #     - prod
-  #   types:
-  #     - closed
-  push:
+  pull_request:
     branches:
-      - feature-cicd
+      - prod
+    types:
+      - closed
 
 jobs:
   deploy-to-minikube:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -34,64 +31,6 @@ jobs:
     - name: Load Docker image to Minikube
       run: |
         minikube image load ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
-
-    - name: Create Kubernetes Deployment
-      run: |
-        cat << EOF > deployment.yaml
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: weather-prediction-app
-        spec:
-          replicas: 1
-          selector:
-            matchLabels:
-              app: weather-prediction-app
-          template:
-            metadata:
-              labels:
-                app: weather-prediction-app
-            spec:
-              containers:
-              - name: weather-prediction-app
-                image: ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
-                imagePullPolicy: Always  # Always try to pull the latest image
-                ports:
-                - containerPort: 5000  # Backend port
-                  name: backend
-                - containerPort: 3000  # Frontend port
-                  name: frontend
-                readinessProbe:
-                  httpGet:
-                    path: /health
-                    port: 5000
-                  initialDelaySeconds: 10
-                  periodSeconds: 5
-                livenessProbe:
-                  httpGet:
-                    path: /health
-                    port: 5000
-                  initialDelaySeconds: 15
-                  periodSeconds: 10
-        ---
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: weather-prediction-service
-        spec:
-          type: NodePort
-          selector:
-            app: weather-prediction-app
-          ports:
-          - name: backend
-            port: 5000
-            targetPort: 5000
-            nodePort: 30007
-          - name: frontend
-            port: 3000
-            targetPort: 3000
-            nodePort: 30008
-        EOF
 
     - name: Deploy to Minikube
       run: |
