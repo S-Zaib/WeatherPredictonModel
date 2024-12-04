@@ -42,6 +42,8 @@ jobs:
         kind: Deployment
         metadata:
           name: weather-prediction-app
+          labels:
+            app: weather-prediction-app
         spec:
           replicas: 1
           selector:
@@ -54,25 +56,34 @@ jobs:
             spec:
               containers:
               - name: weather-prediction-app
-                image: ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
-                imagePullPolicy: Always  # Always try to pull the latest image
+                image: YOUR_DOCKERHUB_USERNAME/weather-prediction-app:latest
+                imagePullPolicy: Always
                 ports:
-                - containerPort: 5000  # Backend port
+                - containerPort: 5000
                   name: backend
-                - containerPort: 3000  # Frontend port
+                - containerPort: 3000
                   name: frontend
+                resources:
+                  requests:
+                    cpu: 100m
+                    memory: 256Mi
+                  limits:
+                    cpu: 500m
+                    memory: 512Mi
                 readinessProbe:
                   httpGet:
                     path: /health
                     port: 5000
-                  initialDelaySeconds: 10
-                  periodSeconds: 5
+                  initialDelaySeconds: 20
+                  periodSeconds: 10
+                  failureThreshold: 3
                 livenessProbe:
                   httpGet:
                     path: /health
                     port: 5000
-                  initialDelaySeconds: 15
-                  periodSeconds: 10
+                  initialDelaySeconds: 30
+                  periodSeconds: 15
+                  failureThreshold: 3
         ---
         apiVersion: v1
         kind: Service
