@@ -56,7 +56,7 @@ jobs:
             spec:
               containers:
               - name: weather-prediction-app
-                image: YOUR_DOCKERHUB_USERNAME/weather-prediction-app:latest
+                image: ${{ secrets.DOCKERHUB_USERNAME }}/weather-prediction-app:latest
                 imagePullPolicy: Always
                 ports:
                 - containerPort: 5000
