@@ -12,7 +12,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..
 sys.path.insert(0, project_root)
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load the model
 MODEL_PATH = os.path.join(project_root, 'model', 'temperature_model.pkl')
@@ -165,6 +165,10 @@ def predict():
         return jsonify({"temperature": float(prediction)})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy"}), 200
 
 
 if __name__ == '__main__':
