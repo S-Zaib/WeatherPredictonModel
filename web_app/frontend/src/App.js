@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 const WeatherPredictionApp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
