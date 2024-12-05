@@ -120,4 +120,3 @@ jobs:
     - name: Get Minikube IP and Service URL
       run: |
           minikube service list
-          minikube service weather-prediction-service --url
