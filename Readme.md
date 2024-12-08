@@ -275,6 +275,7 @@ Deploys services using Minikube for a scalable infrastructure.
 - [MLFlow Documentation](https://mlflow.org/docs/latest/index.html)
 - [Airflow Documentation](https://airflow.apache.org/docs/)
 - [Kubernetes Documentation](https://kubernetes.io/docs/)
+- [Medium Blog](https://medium.com/@i212967/building-a-weather-prediction-pipeline-with-mlops-airflow-dvc-and-mlflow-in-action-0c4f042ef295)
 
 ---
 
