@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/dags/mlruns/345192910760813714/51941c4761e6423e913b9fdbba739b1e/artifacts
+end_time: 1733681883585
+entry_point_name: ''
+experiment_id: '345192910760813714'
+lifecycle_stage: active
+run_id: 51941c4761e6423e913b9fdbba739b1e
+run_name: lyrical-colt-784
+run_uuid: 51941c4761e6423e913b9fdbba739b1e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733681882555
+status: 4
+tags: []
+user_id: szaib

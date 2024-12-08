@@ -6,6 +6,7 @@ import joblib
 import json
 import mlflow
 import mlflow.sklearn
+import os
 
 def train_temperature_model(input_file):
     # Start MLflow experiment
@@ -55,6 +56,9 @@ def train_temperature_model(input_file):
         mlflow.log_metric("mean_squared_error", mse)
         mlflow.log_metric("r2_score", r2)
 
+        # Ensure metrics directory exists
+        os.makedirs('metrics', exist_ok=True)
+
         # Save metrics locally as JSON
         metrics = {
             'mean_squared_error': mse,
@@ -63,6 +67,9 @@ def train_temperature_model(input_file):
         }
         with open('metrics/metrics.json', 'w') as f:
             json.dump(metrics, f)
+
+        # Ensure model directory exists
+        os.makedirs('model', exist_ok=True)
 
         # Save model using joblib
         model_path = 'model/temperature_model.pkl'

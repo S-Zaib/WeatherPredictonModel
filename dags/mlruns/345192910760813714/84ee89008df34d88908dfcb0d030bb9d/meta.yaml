@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/dags/mlruns/345192910760813714/84ee89008df34d88908dfcb0d030bb9d/artifacts
+end_time: 1733682166212
+entry_point_name: ''
+experiment_id: '345192910760813714'
+lifecycle_stage: active
+run_id: 84ee89008df34d88908dfcb0d030bb9d
+run_name: fun-jay-336
+run_uuid: 84ee89008df34d88908dfcb0d030bb9d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733682163171
+status: 3
+tags: []
+user_id: szaib

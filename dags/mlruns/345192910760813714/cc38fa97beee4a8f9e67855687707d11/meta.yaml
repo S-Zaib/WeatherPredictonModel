@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/dags/mlruns/345192910760813714/cc38fa97beee4a8f9e67855687707d11/artifacts
+end_time: 1733681768327
+entry_point_name: ''
+experiment_id: '345192910760813714'
+lifecycle_stage: active
+run_id: cc38fa97beee4a8f9e67855687707d11
+run_name: angry-bear-238
+run_uuid: cc38fa97beee4a8f9e67855687707d11
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733681767649
+status: 4
+tags: []
+user_id: szaib
