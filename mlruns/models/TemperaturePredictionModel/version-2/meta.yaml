@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1733426430995
+current_stage: None
+description: null
+last_updated_timestamp: 1733426430995
+name: TemperaturePredictionModel
+run_id: e2490a2451624703846aa9ed25f4559d
+run_link: null
+source: file:///C:/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/mlruns/898070927857481452/e2490a2451624703846aa9ed25f4559d/artifacts/temperature_model
+status: READY
+status_message: null
+storage_location: file:///C:/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/mlruns/898070927857481452/e2490a2451624703846aa9ed25f4559d/artifacts/temperature_model
+user_id: null
+version: 2

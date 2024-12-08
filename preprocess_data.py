@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 import numpy as np
+import os
 
 # Function to preprocess the weather data
 def preprocess_weather_data(file_path, output_path):
@@ -51,11 +52,15 @@ def preprocess_weather_data(file_path, output_path):
     # Drop the original date_time
     data = data.drop(columns=['date_time'])
 
+    
+
     # Save the preprocessed data
     data.to_csv(output_path, index=False)
     print(f"Preprocessed data saved to {output_path}")
 
 
 if __name__ == "__main__":
+    # Ensure data/processed directory exists
+    os.makedirs('data/processed', exist_ok=True)
     preprocess_weather_data('data/raw/raw.csv', 'data/processed/processed_data.csv')
 

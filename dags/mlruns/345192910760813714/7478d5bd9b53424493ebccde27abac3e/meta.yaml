@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/dags/mlruns/345192910760813714/7478d5bd9b53424493ebccde27abac3e/artifacts
+end_time: 1733682070476
+entry_point_name: ''
+experiment_id: '345192910760813714'
+lifecycle_stage: active
+run_id: 7478d5bd9b53424493ebccde27abac3e
+run_name: luminous-goose-784
+run_uuid: 7478d5bd9b53424493ebccde27abac3e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733682067449
+status: 3
+tags: []
+user_id: szaib
