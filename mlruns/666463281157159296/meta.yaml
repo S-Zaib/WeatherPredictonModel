@@ -1,6 +1,0 @@
-artifact_location: file:///D:/VScode/MLops/MLops_Project/WeatherPredictonModel/mlruns/666463281157159296
-creation_time: 1733340592369
-experiment_id: '666463281157159296'
-last_update_time: 1733340592369
-lifecycle_stage: active
-name: temperature_prediction_PreProcessing_experiment

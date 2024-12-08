@@ -1,0 +1,6 @@
+artifact_location: file:///C:/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/mlruns/898070927857481452
+creation_time: 1733424713077
+experiment_id: '898070927857481452'
+last_update_time: 1733424713077
+lifecycle_stage: active
+name: temperature_prediction_experiment

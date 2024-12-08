@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/dags/mlruns/345192910760813714/401ad3249420408bbcda4448208e2d43/artifacts
+end_time: 1733682077801
+entry_point_name: ''
+experiment_id: '345192910760813714'
+lifecycle_stage: active
+run_id: 401ad3249420408bbcda4448208e2d43
+run_name: unleashed-fawn-777
+run_uuid: 401ad3249420408bbcda4448208e2d43
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733682074688
+status: 3
+tags: []
+user_id: szaib

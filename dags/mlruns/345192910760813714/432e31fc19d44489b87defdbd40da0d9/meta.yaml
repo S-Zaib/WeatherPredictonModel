@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/dags/mlruns/345192910760813714/432e31fc19d44489b87defdbd40da0d9/artifacts
+end_time: 1733681763804
+entry_point_name: ''
+experiment_id: '345192910760813714'
+lifecycle_stage: active
+run_id: 432e31fc19d44489b87defdbd40da0d9
+run_name: ambitious-swan-841
+run_uuid: 432e31fc19d44489b87defdbd40da0d9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733681763198
+status: 4
+tags: []
+user_id: szaib

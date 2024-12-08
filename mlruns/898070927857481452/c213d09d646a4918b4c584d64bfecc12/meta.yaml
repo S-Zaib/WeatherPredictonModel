@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/shahz/MLOPS/classtask7/WeatherPrediction/WeatherPredictonModel/mlruns/898070927857481452/c213d09d646a4918b4c584d64bfecc12/artifacts
+end_time: 1733424718131
+entry_point_name: ''
+experiment_id: '898070927857481452'
+lifecycle_stage: active
+run_id: c213d09d646a4918b4c584d64bfecc12
+run_name: delightful-shark-74
+run_uuid: c213d09d646a4918b4c584d64bfecc12
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733424713722
+status: 3
+tags: []
+user_id: shahz
